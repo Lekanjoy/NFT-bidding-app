@@ -1,3 +1,4 @@
+
 import DashBoard from "@/public/assets/DashBoard.svg";
 import bid from "@/public/assets/bid.svg";
 import heart from "@/public/assets/heart.svg";
@@ -8,8 +9,9 @@ import signOut from "@/public/assets/sign-out.svg";
 import Image from "next/image";
 
 const SideBar = () => {
+
   return (
-    <aside className="w-[250px] Z-50 bg-sidebar flex flex-col justify-between h-[91vh] pt-4  p-2 fixed left-0 top-[58px] lg:w-[80px] ">
+    <aside className="w-[250px] Z-[500] bg-sidebar flex flex-col justify-between h-[91vh] animate-in ease-in-out duration-500 pt-4  p-2 fixed left-0 top-[58px] lg:w-[80px] ">
       <div className="flex flex-col gap-y-6 lg:items-center">
         <div className="flex items-center gap-x-2">
           <Image src={DashBoard} alt="DashBoard" />
@@ -37,7 +39,9 @@ const SideBar = () => {
         </div>
       </div>
 
-      <Image src={signOut} alt="signOut" className="pb-5 lg:pb-10" />
+      <div className="lg:flex lg:items-center lg:justify-center">
+        <Image src={signOut} alt="signOut" className="pb-5 lg:pb-10" />
+      </div>
     </aside>
   );
 };

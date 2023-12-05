@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from "@/providers/theme-provider";
+import Header from "@/components/Header";
 import {store} from '@/store/store';
 import { Provider } from 'react-redux';
 import { Inter } from 'next/font/google';
@@ -26,10 +27,11 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-          >
+        >
+          <Header />
           {children}
         </ThemeProvider>
-          {/* </Provider> */}
+        {/* </Provider> */}
       </body>
     </html>
   );

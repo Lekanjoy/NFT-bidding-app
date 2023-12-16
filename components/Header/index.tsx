@@ -13,7 +13,7 @@ const Header = () => {
 
   return (
     <header className="z-10 w-full fixed left-0 top-0 pr-2 flex justify-between items-center">
-      <div className="flex gap-x-3 lg:gap-x-12">
+      <div className="flex gap-x-3 lg:gap-x-12"> 
         <div
           onClick={() => setShowAsideNav(!showAsideNav)}
           className="relative bg-sidebar flex justify-center items-center p-2 cursor-pointer lg:w-[80px] after:absolute after:bg-sidebar after:w-full after:h-[6px] after:right-0 after:-bottom-[6px]"
@@ -31,7 +31,7 @@ const Header = () => {
       </div>
       <div className="flex justify-between items-center gap-x-2 pt-3">
         <ThemeToggle />
-        <BellRing size={35}/>
+        <BellRing size={20}/>
         <Image src={avatar} alt="Avatar of user" width={25} height={25} />
       </div>
       {/* Mobile Nav */}

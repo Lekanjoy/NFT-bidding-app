@@ -1,4 +1,4 @@
-
+import Link from 'next/link'
 import DashBoard from "@/public/assets/DashBoard.svg";
 import bid from "@/public/assets/bid.svg";
 import heart from "@/public/assets/heart.svg";
@@ -13,30 +13,30 @@ const SideBar = () => {
   return (
     <aside className="w-[250px] Z-[500] bg-sidebar flex flex-col justify-between h-[91vh] animate-in ease-in-out duration-500 pt-4  p-2 fixed left-0 top-[58px] lg:w-[80px] ">
       <div className="flex flex-col gap-y-6 lg:items-center">
-        <div className="flex items-center gap-x-2">
-          <Image src={DashBoard} alt="DashBoard" />
+        <Link href="/" className="flex items-center gap-x-2">
+          <Image className='' src={DashBoard} alt="DashBoard" />
           <p className="text-sm lg:hidden">Dashboard</p>
-        </div>
-        <div className="flex items-center gap-x-2">
+        </Link>
+        <Link href='/bids' className="flex items-center gap-x-2">
           <Image src={bid} alt="bid" />
           <p className="text-sm lg:hidden">Bids</p>
-        </div>
-        <div className="flex items-center gap-x-2">
+        </Link>
+        <Link href='liked' className="flex items-center gap-x-2">
           <Image src={heart} alt="heart" />
           <p className="text-sm lg:hidden">Liked</p>
-        </div>
-        <div className="flex items-center gap-x-2">
+        </Link>
+        <Link href='collection' className="flex items-center gap-x-2">
           <Image src={Collection} alt="Collection" />
           <p className="text-sm lg:hidden">Collections</p>
-        </div>
-        <div className="flex items-center gap-x-2">
+        </Link>
+        <Link href='profile' className="flex items-center gap-x-2">
           <Image src={profile} alt="profile" />
           <p className="text-sm lg:hidden">Profile</p>
-        </div>
-        <div className="flex items-center gap-x-2">
+        </Link>
+        <Link href='settings' className="flex items-center gap-x-2">
           <Image src={setting} alt="setting" />
           <p className="text-sm lg:hidden">Settings</p>
-        </div>
+        </Link>
       </div>
 
       <div className="lg:flex lg:items-center lg:justify-center">

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import ThemeToggle from "@/components/ui/theme-toggle";
 import { Search, BellRing } from "lucide-react";
+import { IoIosNotificationsOutline } from "react-icons/io"
 import avatar from "@/public/assets/avatar.svg";
 import logo from "@/public/assets/Logo (1).svg";
 import Image from "next/image";
@@ -31,7 +32,7 @@ const Header = () => {
       </div>
       <div className="flex justify-between items-center gap-x-2 pt-3">
         <ThemeToggle />
-        <BellRing size={20}/>
+        <IoIosNotificationsOutline size={25}/>
         <Image src={avatar} alt="Avatar of user" width={25} height={25} />
       </div>
       {/* Mobile Nav */}

@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import Header from "@/components/Header";
 import {store} from '@/store/store';
 import { Provider } from 'react-redux';
+import { Web3Modal } from '@/context/Web3Modal';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
@@ -29,7 +30,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          {children}
+          <Web3Modal>{children}</Web3Modal>
         </ThemeProvider>
         {/* </Provider> */}
       </body>

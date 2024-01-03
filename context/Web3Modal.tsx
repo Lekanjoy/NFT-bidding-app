@@ -1,15 +1,11 @@
 "use client";
 import React from "react";
-
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
-
 import { WagmiConfig } from "wagmi";
 import { arbitrum, mainnet } from "viem/chains";
 
-// 1. Get projectId at https://cloud.walletconnect.com
+
 const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_KEY as string
-
-
 
 // 2. Create wagmiConfig
 const metadata = {
@@ -24,6 +20,7 @@ const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
 // 3. Create modal
 createWeb3Modal({ wagmiConfig, projectId, chains });
+
 
 type Web3ModalProps = {
   children: React.ReactNode;

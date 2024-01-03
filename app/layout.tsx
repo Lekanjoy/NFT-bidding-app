@@ -1,18 +1,12 @@
+'use client'
 import type { Metadata } from 'next'
 import { ThemeProvider } from "@/providers/theme-provider";
 import Header from "@/components/Header";
 import {store} from '@/store/store';
 import { Provider } from 'react-redux';
 import { Web3Modal } from '@/context/Web3Modal';
-import { Inter } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'NFT-List-Bid',
-  description: 'Bid for your favorite arts from different collections',
-}
 
 export default function RootLayout({
   children,
@@ -21,8 +15,8 @@ export default function RootLayout({
 }) { 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        {/* <Provider store={store}> */}
+      <body className='font-["Quicksand"]'>
+        <Provider store={store}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -32,7 +26,7 @@ export default function RootLayout({
           <Header />
           <Web3Modal>{children}</Web3Modal>
         </ThemeProvider>
-        {/* </Provider> */}
+        </Provider>
       </body>
     </html>
   );

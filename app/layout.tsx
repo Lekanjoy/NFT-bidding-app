@@ -1,5 +1,4 @@
 'use client'
-import type { Metadata } from 'next'
 import { ThemeProvider } from "@/providers/theme-provider";
 import Header from "@/components/Header";
 import {store} from '@/store/store';

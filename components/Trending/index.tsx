@@ -51,7 +51,7 @@ const Trending = () => {
               />
             ))
           : nftItems.map((nft) => {
-              return <NFTCard key={nft.id} nft={nft} />;
+              return <NFTCard key={nft.order_hash} nft={nft} />;
             })}
       </div>
     </section>

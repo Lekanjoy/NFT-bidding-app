@@ -1,6 +1,7 @@
 export type nftType = {
-  id: string;
+  order_hash: string;
   expiration_time: number;
+  closing_date:string;
   maker_asset_bundle: {
     assets: [
       {
@@ -12,14 +13,16 @@ export type nftType = {
   maker: {
     profile_img_url: string;
     address: string;
+    user:string;
   };
-  current_price: number;
+  current_price: string;
 };
 
 export type nftPropType = {
   nft: {
-    id: string;
+    order_hash: string;
     expiration_time: number;
+    closing_date:string;
     maker_asset_bundle: {
       assets: [
         {
@@ -31,7 +34,8 @@ export type nftPropType = {
     maker: {
       profile_img_url: string;
       address: string;
+      user:string;
     };
-    current_price: number;
+    current_price: string;
   };
 };

@@ -1,14 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { nftType } from "@/types/types";
 
+const apiKey = process.env.NEXT_PUBLIC_OPEN_SEA_KEY;
+
 export const getAllNFTs = createAsyncThunk("nft/getAllNFTs", () => {
+  // This makes sure the apiKey is loaded/returns true before the fetch runs
+  if (!apiKey) {
+    alert('Internal Server Error')
+    console.error("Error in getting all apiKey");
+    return;
+  };
+  
   return fetch(
     "https://api.opensea.io//api/v2/orders/ethereum/seaport/listings?limit=50",
     {
       method: "GET",
       headers: {
         accept: "application/json",
-        "x-api-key": "fc531dabb75748a88a20daf32103eac1",
+        "x-api-key": apiKey,
       },
     }
   )
@@ -17,7 +26,6 @@ export const getAllNFTs = createAsyncThunk("nft/getAllNFTs", () => {
       console.error("Error in getting all NFTs", err);
     });
 });
-
 
 type initialStateType = {
   nftItems: nftType[];

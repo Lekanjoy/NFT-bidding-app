@@ -5,11 +5,15 @@ import avatar from "@/public/assets/avatar.svg";
 import { Button } from "@/components/ui/button";
 import { formatCountdown, shortenAddress } from "@/utils/func";
 import { nftPropType } from "@/types/types";
+import Link from "next/link";
 
 const NFTCard = ({ nft }: nftPropType) => {
   const [countdown, setCountdown] = useState(
     formatCountdown(nft.expiration_time)
   );
+
+  // Convert price from wei to ether
+  const price = parseInt(nft.current_price) / 1e18;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -55,17 +59,21 @@ const NFTCard = ({ nft }: nftPropType) => {
           </div>
           <div className="flex flex-col gap-y-3">
             <p className="text-sm">Price</p>
-            <span className="text-[#6F4FF2] text-sm">{nft.current_price}</span>
-            <p className="text-[#6C7AA0]">0.15 ETH</p>
+            <p className="text-[#6C7AA0] invisible">----</p>
+            <span className="text-[#6F4FF2] text-sm">
+              {price.toFixed(3)} ETH
+            </span>
           </div>
         </div>
         <div className="w-full flex items-center justify-between mt-5 gap-x-5">
           <Button className="bg-[#6F4FF2] text-white w-full hover:bg-[#8972e6]">
             Place a Bid
           </Button>
-          <Button className="bg-[#DC3546] text-white w-full hover:bg-[#f95565]">
-            Details
-          </Button>
+          <Link className="w-full" href={`/nftDetails/${nft.order_hash}`}>
+            <Button className="bg-[#DC3546] text-white w-full hover:bg-[#f95565]">
+              Details
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

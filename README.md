@@ -28,5 +28,5 @@ To run the project, simply run `npm run dev`. This will start a local developmen
 The project consists of the following files:
 
 * `/app/page.tsx`: This is the main entry point of the project. It imports the necessary modules and sets up the server.
-* `Dashboard.tsx`: This component displays the list of all available NFTs.
-* `.env`: This file contains the Rarible API key.
+* `/components/Dashboard.tsx`: This component displays the list of all available NFTs.
+* `.env`: This file contains the Open Sea API key.

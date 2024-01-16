@@ -29,8 +29,4 @@ The project consists of the following files:
 
 * `/app/page.tsx`: This is the main entry point of the project. It imports the necessary modules and sets up the server.
 * `/components/Dashboard.tsx`: This component displays the list of all available NFTs.
-<<<<<<< HEAD
 * `.env`: This file contains the Open Sea API key.
-=======
-* `.env`: This file contains the OpenSea API key.
->>>>>>> 4e511f258deb9e978a132d5c3fdbe6af5539990b

@@ -28,5 +28,13 @@ To run the project, simply run `npm run dev`. This will start a local developmen
 The project consists of the following files:
 
 * `/app/page.tsx`: This is the main entry point of the project. It imports the necessary modules and sets up the server.
-* `/components/Dashboard.tsx`: This component displays the list of all available NFTs.
+* `/components`: This folder holds all custom reusable components and shadcn ui components
 * `.env`: This file contains the Open Sea API key.
+* `/store`: This  contains the global store for Redux Toolkit.
+* `/features`: This folder contains various slice/functionalities of the project.
+* `/utils`: This folder contains reusable functions.
+* `/types`: This folder contains type definitions.
+* `/data`: This folder contains static data definitions.
+* `/context`: This folder contains the web3 Modal contexts.
+* `/provider`: This folder contains files like the shadcn theme-provider.
+

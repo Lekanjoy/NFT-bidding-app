@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useTypedSelector } from "@/store/store";
 import Link from "next/link";
+import { useTypedSelector } from "@/store/store";
+import { useRouter } from 'next/navigation'
 import { TiEyeOutline } from "react-icons/ti";
 import { FaRegHeart, FaRegClock } from "react-icons/fa";
 import { IoPricetagOutline } from "react-icons/io5";
@@ -10,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import { generateCountdown } from "@/utils/func";
 
 const NFTDetails = ({ params }: { params: { id: string } }) => {
+  const router = useRouter()
+
   const { nftItems } = useTypedSelector((store) => store.nft);
 
   const findNFTDetails = nftItems.find(
@@ -48,7 +51,8 @@ const imgUrl = findNFTDetails !== undefined ? findNFTDetails?.maker_asset_bundle
 const nftName = findNFTDetails !== undefined ? findNFTDetails?.maker_asset_bundle.assets[0].name : 'Error getting title name';
 
   return (
-    <section className="flex flex-col gap-4 justify-between px-4 py-3 pb-10 mt-[60px] lg:w-[calc(100% - 80px)] lg:ml-[80px] lg:flex-row l">
+    <section className="relative flex flex-col gap-4 justify-between px-4 py-3 pb-10 mt-[100px] lg:w-[calc(100% - 80px)] lg:ml-[80px] lg:flex-row l">
+      <Button size={'sm'} variant={'outline'} onClick={() => router.back()} className="absolute -top-[35px] w-fit bg-sidebar text-primary">Back</Button>
       <div className="w-full bg-sidebar rounded-xl p-4 flex-grow lg:w-2/5">
         <Image
           src={imgUrl}

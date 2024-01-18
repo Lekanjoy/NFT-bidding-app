@@ -47,7 +47,7 @@ const Trending = () => {
           ? [...Array(20)].map((_) => (
               <Skeleton
                 key={nanoid()}
-                className="w-[100px] h-[20px] rounded-full"
+                className="w-full h-[200px] rounded-xl"
               />
             ))
           : nftItems.map((nft) => {

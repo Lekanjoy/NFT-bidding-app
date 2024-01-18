@@ -30,12 +30,14 @@ export const getAllNFTs = createAsyncThunk("nft/getAllNFTs", () => {
 type initialStateType = {
   nftItems: nftType[];
   loading: boolean;
-  error: string | undefined;
+  hasRunInitially:boolean;
+  error: string;
 };
 
 const initialState: initialStateType = {
   nftItems: [],
   loading: false,
+  hasRunInitially:false,
   error: "",
 };
 
@@ -49,12 +51,14 @@ const nftSlice = createSlice({
     });
     builder.addCase(getAllNFTs.fulfilled, (state, action) => {
       state.loading = false;
+      state.hasRunInitially = true;
       state.nftItems = action.payload.orders;
     });
     builder.addCase(getAllNFTs.rejected, (state, action) => {
       state.loading = false;
+      state.hasRunInitially = false;
       state.nftItems = [];
-      state.error = action.error?.message || "An unknown error occurred";
+      state.error = action.error?.message ?? "An unknown error occurred";
     });
   },
 });

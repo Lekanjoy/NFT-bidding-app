@@ -30,6 +30,18 @@ const nextConfig = {
             port: '',
             pathname: '/**',
           },
+          {
+            protocol: 'https',
+            hostname: "nft-cdn.alchemy.com",
+            port: '',
+            pathname: '/**',
+          },
+          {
+            protocol: 'https',
+            hostname: "ipfs.io",
+            port: '',
+            pathname: '/**',
+          },
         ],
       },
     

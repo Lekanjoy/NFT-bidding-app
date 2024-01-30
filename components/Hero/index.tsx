@@ -32,7 +32,7 @@ const Hero = () => {
             <p className="text-sm font-bold">John Abraham</p>
             <p className="w-2 h-2 rounded-full bg-green-600 ml-2"></p>
           </div>
-          <h3 className="my-3 font-bold">Birghten LQ</h3>
+          <h3 className="my-3 font-bold">Bored Ape</h3>
           <div className="flex justify-between  lg:w-full">
             <div className="flex flex-col gap-y-3">
               <p className='text-sm'>Auction Time</p>

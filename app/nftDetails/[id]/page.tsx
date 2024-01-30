@@ -4,15 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTypedSelector } from "@/store/store";
 import { useRouter } from 'next/navigation'
+import { Button } from "@/components/ui/button";
+import { generateCountdown } from "@/utils/func";
 import { TiEyeOutline } from "react-icons/ti";
 import { FaRegHeart, FaRegClock } from "react-icons/fa";
 import { IoPricetagOutline } from "react-icons/io5";
-import { Button } from "@/components/ui/button";
-import { generateCountdown } from "@/utils/func";
 
 const NFTDetails = ({ params }: { params: { id: string } }) => {
   const router = useRouter()
-
   const { nftItems } = useTypedSelector((store) => store.nft);
 
   const findNFTDetails = nftItems.find(
@@ -46,7 +45,7 @@ const NFTDetails = ({ params }: { params: { id: string } }) => {
 const endDateString = findNFTDetails?.closing_date
 const countdownMessage = endDateString !== undefined ? generateCountdown(endDateString) : 'Error getting sale time left';
 
-const currentPrice = findNFTDetails !== undefined ? parseInt(findNFTDetails.current_price) / 1e18 : 'Error getting price';
+const currentPrice = findNFTDetails !== undefined ? parseInt(findNFTDetails?.current_price) / 1e18 : 'Error getting price';
 const imgUrl = findNFTDetails !== undefined ? findNFTDetails?.maker_asset_bundle.assets[0].image_url : '';
 const nftName = findNFTDetails !== undefined ? findNFTDetails?.maker_asset_bundle.assets[0].name : 'Error getting title name';
 
@@ -75,7 +74,7 @@ const nftName = findNFTDetails !== undefined ? findNFTDetails?.maker_asset_bundl
           <h2 className="font-bold text-xl lg:text-2xl">#2841</h2>
           <p>
             Owned by{" "}
-            <Link href={""} className="text-[#6F4FF2]">
+            <Link href={`/nftDetails/${findNFTDetails?.order_hash}/${findNFTDetails?.maker.address}`} className="text-[#6F4FF2]">
               {findNFTDetails?.maker.user}
             </Link>{" "}
           </p>
@@ -83,7 +82,7 @@ const nftName = findNFTDetails !== undefined ? findNFTDetails?.maker_asset_bundl
         <div className="flex gap-x-4">
           <div className="flex items-center gap-x-1">
             <TiEyeOutline size={25} />
-            <p>{views} views</p>
+            <p>{views} view{views > 1 ? 's' : ''}</p>
           </div>
           <div className="flex items-center gap-x-1 ">
             <FaRegHeart color={favorite} onClick={toggleFavorite} className='cursor-pointer'/>

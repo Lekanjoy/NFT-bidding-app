@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { nftType } from "@/types/types";
+import axios from "axios";
 
 const apiKey = process.env.NEXT_PUBLIC_OPEN_SEA_KEY;
 
@@ -11,7 +12,8 @@ export const getAllNFTs = createAsyncThunk("nft/getAllNFTs", () => {
     return;
   };
   
-  return fetch(
+  // Switch data fetch using axios
+  return axios.get(
     "https://api.opensea.io//api/v2/orders/ethereum/seaport/listings?limit=50",
     {
       method: "GET",
@@ -21,7 +23,7 @@ export const getAllNFTs = createAsyncThunk("nft/getAllNFTs", () => {
       },
     }
   )
-    .then((res) => res.json())
+    .then((res) => res.data)
     .catch((err) => {
       console.error("Error in getting all NFTs", err);
     });

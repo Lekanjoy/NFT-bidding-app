@@ -39,3 +39,20 @@ export type nftPropType = {
     current_price: string;
   };
 };
+
+
+export type ownerDataType = {
+    tokenId:string;
+    image:{
+      cachedUrl:string
+    };
+    contract: {
+      name:string;
+      openSeaMetadata:{
+        floorPrice:string;
+      }
+    };
+    collection:{
+      slug:string;
+    }
+}

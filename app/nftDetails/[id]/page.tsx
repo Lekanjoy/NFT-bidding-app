@@ -1,57 +1,57 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTypedSelector } from "@/store/store";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { generateCountdown } from "@/utils/func";
-import { TiEyeOutline } from "react-icons/ti";
-import { FaRegHeart, FaRegClock } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa";
 import { IoPricetagOutline } from "react-icons/io5";
+import NFTAnalytics, { IanalyticsData } from "@/components/NFTAnalytics";
 
 const NFTDetails = ({ params }: { params: { id: string } }) => {
-  const router = useRouter()
-  const { nftItems } = useTypedSelector((store) => store.nft);
+  const [favoriteCount, setFavoriteCount] = useState(0);
+  const [views, setViews] = useState(0);
+  const [analyticsData, setAnalyticsData] = useState<IanalyticsData[] | null>(
+    null
+  );
 
+  const router = useRouter();
+  const { nftItems } = useTypedSelector((store) => store.nft);
   const findNFTDetails = nftItems.find(
     (result) => result.order_hash === params.id
   );
 
-  const [favorite, setFavorite] = useState("");
-  const [favoriteCount, setFavoriteCount] = useState(0);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const endDateString = findNFTDetails?.expiration_time;
+  const countdownMessage =
+    endDateString !== undefined
+      ? generateCountdown(endDateString)
+      : "Error getting sale time left";
 
-  useEffect(() => {
-    setFavorite(isFavorite ? "red" : "");
-  }, [isFavorite]);
-
-  const toggleFavorite = () => {
-    setIsFavorite((prevState) => !prevState);
-    setFavoriteCount((prevState) =>
-      isFavorite ? prevState - 1 : prevState + 1
-    );
-  };
-
-  const [views, setViews] = useState(0); //This will be gotten from the database later on
-  useEffect(() => {
-    const storedViews = localStorage.getItem("pageViewCount");
-    setViews(storedViews ? parseInt(storedViews) : 0);
-
-    setViews((prevViews) => prevViews + 1);
-    localStorage.setItem("pageViewCount", views.toString());
-  }, []);
-
-const endDateString = findNFTDetails?.closing_date
-const countdownMessage = endDateString !== undefined ? generateCountdown(endDateString) : 'Error getting sale time left';
-
-const currentPrice = findNFTDetails !== undefined ? parseInt(findNFTDetails?.current_price) / 1e18 : 'Error getting price';
-const imgUrl = findNFTDetails !== undefined ? findNFTDetails?.maker_asset_bundle.assets[0].image_url : '';
-const nftName = findNFTDetails !== undefined ? findNFTDetails?.maker_asset_bundle.assets[0].name : 'Error getting title name';
+  const currentPrice =
+    findNFTDetails !== undefined
+      ? parseInt(findNFTDetails?.current_price) / 1e18
+      : "Error getting price";
+  const imgUrl =
+    findNFTDetails !== undefined
+      ? findNFTDetails?.maker_asset_bundle.assets[0].image_url
+      : "";
+  const nftName =
+    findNFTDetails !== undefined
+      ? findNFTDetails?.maker_asset_bundle.assets[0].name
+      : "Error getting title name";
 
   return (
     <section className="relative flex flex-col gap-4 justify-between px-4 py-3 pb-10 mt-[100px] lg:w-[calc(100% - 80px)] lg:ml-[80px] lg:flex-row l">
-      <Button size={'sm'} variant={'outline'} onClick={() => router.back()} className="absolute -top-[35px] w-fit bg-sidebar text-primary">Back</Button>
+      <Button
+        size={"sm"}
+        variant={"outline"}
+        onClick={() => router.back()}
+        className="absolute -top-[35px] w-fit bg-sidebar text-primary"
+      >
+        Back
+      </Button>
       <div className="w-full bg-sidebar rounded-xl p-4 flex-grow lg:w-2/5">
         <Image
           src={imgUrl}
@@ -62,33 +62,28 @@ const nftName = findNFTDetails !== undefined ? findNFTDetails?.maker_asset_bundl
         />
       </div>
       <div className="flex flex-col gap-y-6 lg:w-3/5">
-        <div className="flex flex-col gap-y-3">
-          <p className="text-2xl font-semibold lg:text-3xl">
-            {nftName}
-          </p>
-          <p className="text-xs lg:text-sm lg:w-3/4">
-            {/* {findNFTDetails?.maker_asset_bundle.assets[0].description} */}
-          </p>
-        </div>
+        <p className="text-2xl font-semibold lg:text-3xl">{nftName}</p>
         <div className="flex gap-y-1 flex-col">
           <h2 className="font-bold text-xl lg:text-2xl">#2841</h2>
           <p>
             Owned by{" "}
-            <Link href={`/nftDetails/${findNFTDetails?.order_hash}/${findNFTDetails?.maker.address}`} className="text-[#6F4FF2]">
+            <Link
+              href={`/nftDetails/${findNFTDetails?.order_hash}/${findNFTDetails?.maker.address}`}
+              className="text-[#6F4FF2]"
+            >
               {findNFTDetails?.maker.user}
             </Link>{" "}
           </p>
         </div>
-        <div className="flex gap-x-4">
-          <div className="flex items-center gap-x-1">
-            <TiEyeOutline size={25} />
-            <p>{views} view{views > 1 ? 's' : ''}</p>
-          </div>
-          <div className="flex items-center gap-x-1 ">
-            <FaRegHeart color={favorite} onClick={toggleFavorite} className='cursor-pointer'/>
-            <p>{favoriteCount} favorites</p>
-          </div>
-        </div>
+        <NFTAnalytics
+          params={params}
+          analyticsData={analyticsData}
+          setAnalyticsData={setAnalyticsData}
+          views={views}
+          setViews={setViews}
+          favoriteCount={favoriteCount}
+          setFavoriteCount={setFavoriteCount}
+        />
         <div className="w-full bg-sidebar flex flex-col rounded-xl border">
           <div className="flex gap-x-2 items-center border-b p-4">
             <FaRegClock />
@@ -97,9 +92,7 @@ const nftName = findNFTDetails !== undefined ? findNFTDetails?.maker_asset_bundl
           <div className="flex flex-col p-4">
             <div className="flex flex-col gap-y-3">
               <p>Current Price</p>
-              <p className="text-3xl font-semibold">
-                {currentPrice} ETH
-              </p>
+              <p className="text-3xl font-semibold">{currentPrice} ETH</p>
             </div>
             <div className="w-full flex items-center justify-between mt-5 gap-x-2 lg:gap-x-5">
               <Button

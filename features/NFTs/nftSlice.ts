@@ -12,7 +12,6 @@ export const getAllNFTs = createAsyncThunk("nft/getAllNFTs", () => {
     return;
   };
   
-  // Switch data fetch using axios
   return axios.get(
     "https://api.opensea.io//api/v2/orders/ethereum/seaport/listings?limit=50",
     {

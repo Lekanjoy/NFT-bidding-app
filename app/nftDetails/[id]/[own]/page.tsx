@@ -122,7 +122,7 @@ const NFTOwner = async ({ params }: { params: { own: string } }) => {
                   <p>{data.contract.name}</p>
                   <p className="">{data.collection.slug}</p>
                 </div>
-                <div className="mt-4 px-4 text-gray-500 justify-self-end">
+                <div className="mt-4 px-4 text-gray-500 justify-end">
                   Floor Price: {data.contract.openSeaMetadata.floorPrice} WETH
                 </div>
               </div>

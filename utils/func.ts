@@ -6,23 +6,29 @@ export function formatCountdown(timestampInSeconds: number) {
     return "00:00:00"; // The timestamp has already passed
   }
 
-  const hours = Math.floor(remainingTime / 3600);
+  const days = Math.floor(remainingTime / 86400); // 86400 = 24 * 60 * 60
+  const hours = Math.floor((remainingTime % 86400) / 3600);
   const minutes = Math.floor((remainingTime % 3600) / 60);
   const seconds = remainingTime % 60;
 
+  const formattedDays = days.toString().padStart(2, "0");
   const formattedHours = hours.toString().padStart(2, "0");
   const formattedMinutes = minutes.toString().padStart(2, "0");
   const formattedSeconds = seconds.toString().padStart(2, "0");
 
-  return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  if (days > 0) {
+    return `${formattedDays}d : ${formattedHours}hr : ${formattedMinutes}m : ${formattedSeconds}s`;
+  }
+
+  return `${formattedHours}hr : ${formattedMinutes}m : ${formattedSeconds}s`;
 }
 
 export function shortenAddress(address: string): string {
-  const shortened = `${address.slice(0, 4)}.............${address.slice(-5)}`;
+  const shortened = `${address.slice(0, 4)}.....${address.slice(-5)}`;
   return shortened;
 }
 
-export function formatDate(dateString: string) {
+export function formatDate(dateString: string | number) {
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = {
     month: "long",
@@ -36,58 +42,22 @@ export function formatDate(dateString: string) {
   return date.toLocaleString("en-US", options);
 }
 
-export function generateCountdown(endDate: string) {
-  const now = new Date();
-  const end = new Date(endDate);
+export function generateCountdown(endDate: number) {
+  const now = Math.floor(Date.now() / 1000);
 
-  const timeDifference = end.getTime() - now.getTime();
+  const timeDifference = endDate - now;
 
-  if (timeDifference <= 0) {
+  if (timeDifference < 0) {
     return "Sale has ended.";
-  };
+  }
+  const hours = Math.floor(timeDifference / 3600);
+  const minutes = Math.floor((timeDifference % 3600) / 60);
 
-  const hours = Math.floor(timeDifference / 3600000);
-  const minutes = Math.floor((timeDifference % 3600000) / 60000);
-
-  if (timeDifference <= 3600000) {
-    return `Sale ends in ${hours} hours and ${minutes} minutes.`;
+  if (timeDifference <= 3600) {
+    return `Sale ends in ${hours} hour and ${minutes} minutes.`;
   } else {
-    return `Sale ends on ${formatDate(endDate)}.`;
+    const closingDate = new Date(endDate * 1000);
+    const formattedClosingDate = closingDate.toISOString().replace("Z", "");
+    return `Sale ends on ${formatDate(formattedClosingDate)}.`;
   }
 }
-
-
-// Generate Offer
-// async function createOffer(listingData, paymentTokenAddress) {
-//   const response = await fetch(`https://api.opensea.io/api/v2/create_item_offer`, {
-//     method: 'POST',
-//     headers: { 'X-API-Key': apiKey },
-//     body: JSON.stringify({
-//       asset: listingData.asset.asset_contract.address,
-//       token_id: listingData.asset.token_id,
-//       token_type: 'ERC721', // Assuming ERC721 NFT
-//       payment_token_type: paymentTokenAddress,
-//       offer_amount: listingData.current_price
-//     })
-//   });
-//   const offerData = await response.json();
-//   return offerData;
-// };
-
-// // Sign Offer Transaction
-// async function signOfferTransaction(offerData) {
-//   // Use your wallet's functionality to sign the transaction
-//   const signedTransaction = await wallet.signTransaction(offerData.transaction);
-//   return signedTransaction;
-// };
-
-// // Submit Offer
-// async function submitOffer(offerId, signedTransaction) {
-//   const response = await fetch(`https://api.opensea.io/api/v2/orders/${chainId}/${protocolId}/offers/${offerId}/accept`, {
-//     method: 'POST',
-//     headers: { 'X-API-Key': apiKey },
-//     body: JSON.stringify({ transaction: signedTransaction })
-//   });
-//   const submissionData = await response.json();
-//   console.log(submissionData);
-// }

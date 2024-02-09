@@ -6,14 +6,14 @@ import { CgProfile } from "react-icons/cg";
 import { IoMdSettings } from "react-icons/io";
 import { IconType } from "react-icons";
 
-interface asideDataProps {
+interface IasideData {
   id: number;
   name: string;
   urlPath: string;
   icon: IconType;
 }
 
-export const asideData: asideDataProps[] = [
+export const asideData: IasideData[] = [
   {
     id: 0,
     name: "Dashboard",

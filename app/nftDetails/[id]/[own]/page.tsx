@@ -1,11 +1,10 @@
-import axios from "axios";
 import Image from "next/image";
+import axios from "axios";
 import { shortenAddress, formatDate } from "@/utils/func";
 import { ownerDataType } from "@/types/types";
-import { Skeleton } from "@/components/ui/skeleton";
 
 async function getOwnerData(address: string) {
-  const apiKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY as string;
 
   if (!apiKey) {
     alert("Internal Server Error");
@@ -14,7 +13,7 @@ async function getOwnerData(address: string) {
   }
 
   const baseURL = `https://eth-mainnet.g.alchemy.com/nft/v3/${apiKey}/getNFTsForOwner/`;
-  const pageSize = 12;
+  const pageSize = 12; // TODO: make this dynamic and add pagination
   const config = {
     method: "get",
     url: `${baseURL}?owner=${address}&pageSize=${pageSize}`,
@@ -30,7 +29,7 @@ async function getOwnerData(address: string) {
 }
 
 async function getAccount(address: string) {
-  const apiKey = process.env.NEXT_PUBLIC_OPEN_SEA_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_OPEN_SEA_KEY as string;
 
   if (!apiKey) {
     alert("Internal Server Error");
@@ -101,10 +100,6 @@ const NFTOwner = async ({ params }: { params: { own: string } }) => {
         </div>
 
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-3">
-          {/* {[...Array(12)].map((_, id) => (
-            <Skeleton className="w-full min-h-[200px] bg-sidebar rounded-xl p-3 flex flex-col justify-between gap-y-2" key={id} />
-          ))} */}
-
           {ownerData.map((data: ownerDataType) => {
             return (
               <div

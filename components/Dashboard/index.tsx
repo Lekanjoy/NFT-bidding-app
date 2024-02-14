@@ -7,7 +7,7 @@ const Dashboard = () => {
     <section className="w-full">
       <Hero />
       <Trending />
-      <TrendingCharts/>
+      {/* <TrendingCharts/> */}
     </section>
   );
 };

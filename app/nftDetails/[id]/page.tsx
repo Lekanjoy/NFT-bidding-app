@@ -19,7 +19,7 @@ const NFTDetails = ({ params }: { params: { id: string } }) => {
 
   const router = useRouter();
   const { nftItems } = useTypedSelector((store) => store.nft);
-  const findNFTDetails = nftItems.find(
+  const findNFTDetails = nftItems?.orders?.find(
     (result) => result.order_hash === params.id
   );
 

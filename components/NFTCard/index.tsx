@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import avatar from "@/public/assets/avatar.svg";
 import { Button } from "@/components/ui/button";
 import { formatCountdown, shortenAddress } from "@/utils/func";
 import { nftPropType } from "@/types/types";
-import Link from "next/link";
 
 const NFTCard = ({ nft }: nftPropType) => {
   const [countdown, setCountdown] = useState(
@@ -43,7 +43,7 @@ const NFTCard = ({ nft }: nftPropType) => {
             height={25}
           />
         ) : (
-          <Image src={avatar} alt="" width={25} height={25} />
+          <Image src={avatar} alt="Placeholder avatar" width={25} height={25} />
         )}
         <p className="text-sm font-bold">{shortenAddress(nft.maker.address)}</p>{" "}
       </div>

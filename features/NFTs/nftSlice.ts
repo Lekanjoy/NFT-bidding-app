@@ -6,7 +6,7 @@ const apiKey = process.env.NEXT_PUBLIC_OPEN_SEA_KEY as string;
 
 export const getAllNFTs = createAsyncThunk(
   "nft/getAllNFTs",
-  ({ chain, nextPageToken }: { chain: string, nextPageToken?: string })=> {
+  ({ chain, nextPageToken }: { chain: string, nextPageToken?: string }) => {
     // This makes sure the apiKey is loaded / returns true before the fetch runs
     if (!apiKey) {
       alert("Internal Server Error");
@@ -15,7 +15,7 @@ export const getAllNFTs = createAsyncThunk(
     }
 
     let endpoint =
-      `https://api.opensea.io//api/v2/orders/${chain}/seaport/listings?limit=12`;
+      `https://api.opensea.io//api/v2/orders/${chain}/seaport/listings?limit=24`;
 
     if (nextPageToken !== '') {
       // If nextPageToken is provided, append it to the URL

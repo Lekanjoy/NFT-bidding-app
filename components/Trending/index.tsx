@@ -13,23 +13,20 @@ interface trendCatProps {
 
 const Trending = () => {
   const trendCategories: trendCatProps[] = [
-
     { id: 0, text: "Ethereum" },
 
     { id: 1, text: "Arbitrum" },
   ];
 
+  const dispatch = useAppDispatch();
+  const { nftItems, loading, hasRunInitially} = useTypedSelector((store) => store.nft);
   const [selectedCat, setSelectedCat] = useState(0);
-  const { nftItems, loading } = useTypedSelector((store) => store.nft);
   const [nextPage, setNextPage] = useState('');
 
-  const dispatch = useAppDispatch();;
-  const { hasRunInitially } = useTypedSelector((store) => store.nft);
 
   useEffect(() => {
     if (hasRunInitially === false) {
       dispatch(getAllNFTs({ chain: "ethereum", nextPageToken: "" }));
-
     }
   }, [dispatch, hasRunInitially]);
 

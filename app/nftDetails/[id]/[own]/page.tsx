@@ -1,9 +1,10 @@
 import Image from "next/image";
 import axios from "axios";
 import { shortenAddress, formatDate } from "@/utils/func";
-import { ownerDataType } from "@/types/types";
+import OwnedNFTs from "@/components/OwnedNFTs";
 
-async function getOwnerData(address: string) {
+async function getOwnerData(address: string, pageKey?: string) {
+  "use server";
   const apiKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY as string;
 
   if (!apiKey) {
@@ -16,7 +17,10 @@ async function getOwnerData(address: string) {
   const pageSize = 12; // TODO: make this dynamic and add pagination
   const config = {
     method: "get",
-    url: `${baseURL}?owner=${address}&pageSize=${pageSize}`,
+    url:
+      pageKey !== "" && typeof pageKey === "string"
+        ? `${baseURL}?owner=${address}&pageSize=${pageSize}&pageKey=${pageKey}`
+        : `${baseURL}?owner=${address}&pageSize=${pageSize}`,
   };
 
   const res = await axios(config);
@@ -24,8 +28,8 @@ async function getOwnerData(address: string) {
   if (res.status !== 200) {
     throw new Error("Failed to fetch owner data");
   }
-
-  return res.data.ownedNfts;
+  console.log(config.url);
+  return res.data;
 }
 
 async function getAccount(address: string) {
@@ -51,8 +55,7 @@ async function getAccount(address: string) {
   return res.data;
 }
 
-const NFTOwner = async ({ params }: { params: { own: string } }) => {
-  const ownerData = await getOwnerData(params.own);
+const NFTOwner = async ({ params }: { params: { own: string } }) =>  {
   const accountData = await getAccount(params.own);
 
   return (
@@ -100,29 +103,7 @@ const NFTOwner = async ({ params }: { params: { own: string } }) => {
         </div>
 
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-3">
-          {ownerData.map((data: ownerDataType) => {
-            return (
-              <div
-                key={data.tokenId}
-                className="flex flex-col gap-y-3 bg-sidebar pb-4 rounded-md hover:scale-95 duration-300 ease-in-out lg:cursor-pointer"
-              >
-                <Image
-                  src={data.image.cachedUrl}
-                  alt="NFT collected/owned"
-                  width={200}
-                  height={200}
-                  className="w-full max-h-[300px] rounded-md"
-                />
-                <div className=" font-semibold px-4">
-                  <p>{data.contract.name}</p>
-                  <p className="">{data.collection.slug}</p>
-                </div>
-                <div className="mt-4 px-4 text-gray-500 justify-end">
-                  Floor Price: {data.contract.openSeaMetadata.floorPrice} WETH
-                </div>
-              </div>
-            );
-          })}
+          <OwnedNFTs ownerData={getOwnerData} params={params.own} />
         </div>
       </div>
     </section>

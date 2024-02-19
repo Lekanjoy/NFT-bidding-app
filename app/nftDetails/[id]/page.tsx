@@ -64,7 +64,7 @@ const NFTDetails = ({ params }: { params: { id: string } }) => {
       <div className="flex flex-col gap-y-6 lg:w-3/5">
         <p className="text-2xl font-semibold lg:text-3xl">{nftName}</p>
         <div className="flex gap-y-1 flex-col">
-          <h2 className="font-bold text-xl lg:text-2xl">#2841</h2>
+          <h2 className="font-bold text-xl lg:text-2xl">#{findNFTDetails?.maker.user}</h2>
           <p>
             Owned by{" "}
             <Link

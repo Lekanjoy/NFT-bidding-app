@@ -67,7 +67,7 @@ const OwnedNFTs = ({ ownerData, params }: OwnedNFTsProps) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [nextPage]);
-  
+
   useEffect(() => {
     if (ownerNfts?.ownedNfts?.length > 0) {
       // Update the nextPage state when new data is fetched
@@ -75,9 +75,6 @@ const OwnedNFTs = ({ ownerData, params }: OwnedNFTsProps) => {
     }
   }, [ownerNfts?.ownedNfts]);
 
-  console.log(ownerNfts.ownedNfts)
-
-  //TODO: Add skeleton
 
   return (
     <>

@@ -14,7 +14,7 @@ async function getOwnerData(address: string, pageKey?: string) {
   }
 
   const baseURL = `https://eth-mainnet.g.alchemy.com/nft/v3/${apiKey}/getNFTsForOwner/`;
-  const pageSize = 12; // TODO: make this dynamic and add pagination
+  const pageSize = 12;
   const config = {
     method: "get",
     url:
@@ -28,7 +28,6 @@ async function getOwnerData(address: string, pageKey?: string) {
   if (res.status !== 200) {
     throw new Error("Failed to fetch owner data");
   }
-  console.log(config.url);
   return res.data;
 }
 

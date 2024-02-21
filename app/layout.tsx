@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { ThemeProvider } from "@/providers/theme-provider";
 import ReduxProvider from "@/providers/ReduxProvider";
 import { Web3Modal } from "@/context/Web3Modal";
+import NextTopLoader from "nextjs-toploader";
 import Header from "@/components/Header";
 import "./globals.css";
 
@@ -27,6 +28,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Header />
+            <NextTopLoader showSpinner={false} shadow={false} />
             <Web3Modal>{children}</Web3Modal>
           </ThemeProvider>
         </ReduxProvider>

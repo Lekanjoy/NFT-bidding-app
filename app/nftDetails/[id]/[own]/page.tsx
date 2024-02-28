@@ -22,7 +22,7 @@ async function getOwnerData(address: string, pageKey?: string) {
         ? `${baseURL}?owner=${address}&pageSize=${pageSize}&pageKey=${pageKey}`
         : `${baseURL}?owner=${address}&pageSize=${pageSize}`,
   };
-
+  
   const res = await axios(config);
 
   if (res.status !== 200) {
@@ -76,7 +76,7 @@ const NFTOwner = async ({ params }: { params: { own: string } }) =>  {
           alt="Profile"
           width={150}
           height={150}
-          className="absolute z-[100] top-[90px] left-8 w-[150px] h-[150px] rounded-full"
+          className="absolute top-[90px] left-8 w-[150px] h-[150px] rounded-full"
         />
       ) : (
         <p className="absolute top-[90px] left-8 w-[150px] h-[150px] rounded-full bg-gray-400  border-4 border-sidebar"></p>

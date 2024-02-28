@@ -49,7 +49,7 @@ const OwnedNFTs = ({ ownerData, params }: OwnedNFTsProps) => {
     const handleScroll = () => {
       if (
         window.innerHeight + document.documentElement.scrollTop ===
-        document.documentElement.offsetHeight
+        document.documentElement.offsetHeight && nextPage  !== "" && nextPage != null
       ) {
         // User has scrolled to the bottom of the page
         ownerData(params, nextPage).then((data: ownerDataType) => {

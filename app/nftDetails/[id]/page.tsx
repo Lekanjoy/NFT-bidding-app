@@ -11,13 +11,14 @@ import { IoPricetagOutline } from "react-icons/io5";
 import NFTAnalytics, { IanalyticsData } from "@/components/NFTAnalytics";
 
 const NFTDetails = ({ params }: { params: { id: string } }) => {
+  const router = useRouter();
+  
   const [favoriteCount, setFavoriteCount] = useState(0);
   const [views, setViews] = useState(0);
   const [analyticsData, setAnalyticsData] = useState<IanalyticsData[] | null>(
     null
   );
 
-  const router = useRouter();
   const { nftItems } = useTypedSelector((store) => store.nft);
   const findNFTDetails = nftItems?.orders?.find(
     (result) => result.order_hash === params.id

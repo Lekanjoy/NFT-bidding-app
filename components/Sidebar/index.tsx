@@ -8,7 +8,7 @@ const SideBar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="w-[250px] Z-[500] bg-sidebar flex flex-col justify-between h-[91vh] animate-in ease-in-out duration-500 pt-4  p-2 fixed left-0 top-[58px] lg:w-[80px] ">
+    <aside className="w-[250px] z-[500] bg-sidebar flex flex-col justify-between h-[91vh] animate-in ease-in-out duration-500 pt-4  p-2 fixed left-0 top-[58px] lg:w-[80px] ">
       <div className="flex flex-col gap-y-6 lg:items-center">
         {asideData.map((data) => {
           const { id, urlPath, name } = data;

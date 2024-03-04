@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTypedSelector } from "@/store/store";
@@ -12,7 +12,7 @@ import NFTAnalytics, { IanalyticsData } from "@/components/NFTAnalytics";
 
 const NFTDetails = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
-  
+
   const [favoriteCount, setFavoriteCount] = useState(0);
   const [views, setViews] = useState(0);
   const [analyticsData, setAnalyticsData] = useState<IanalyticsData[] | null>(
@@ -24,24 +24,38 @@ const NFTDetails = ({ params }: { params: { id: string } }) => {
     (result) => result.order_hash === params.id
   );
 
-  const endDateString = findNFTDetails?.expiration_time;
+  // Add current data to session storage
+  const storeJson = sessionStorage.getItem("storedCurrentNFT");
+  const retrievedCurrentNFT = JSON.parse(storeJson || "{}");
+
+  useEffect(() => {
+    if (findNFTDetails !== undefined) {
+      sessionStorage.setItem(
+        `storedCurrentNFT`,
+        JSON.stringify(findNFTDetails)
+      );
+    }
+  }, []);
+
+  // Extracting essential data from API or sessionStorage
+  const endDateString =
+    findNFTDetails?.expiration_time || retrievedCurrentNFT?.expiration_time;
   const countdownMessage =
     endDateString !== undefined
       ? generateCountdown(endDateString)
       : "Error getting sale time left";
-
   const currentPrice =
-    findNFTDetails !== undefined
-      ? parseInt(findNFTDetails?.current_price) / 1e18
-      : "Error getting price";
+    (findNFTDetails && parseInt(findNFTDetails?.current_price) / 1e18) ||
+    parseInt(retrievedCurrentNFT?.current_price) / 1e18;
   const imgUrl =
-    findNFTDetails !== undefined
-      ? findNFTDetails?.maker_asset_bundle.assets[0].image_url
-      : "";
+    findNFTDetails?.maker_asset_bundle.assets[0].image_url ||
+    retrievedCurrentNFT?.maker_asset_bundle.assets[0].image_url;
   const nftName =
-    findNFTDetails !== undefined
-      ? findNFTDetails?.maker_asset_bundle.assets[0].name
-      : "Error getting title name";
+    findNFTDetails?.maker_asset_bundle.assets[0].name ||
+    retrievedCurrentNFT?.maker_asset_bundle.assets[0].name;
+  const ownerDetailsRoute = `${
+    findNFTDetails?.order_hash || retrievedCurrentNFT?.order_hash
+  }/${findNFTDetails?.maker.address || retrievedCurrentNFT?.maker.address}`;
 
   return (
     <section className="relative flex flex-col gap-4 justify-between px-4 py-3 pb-10 mt-[100px] lg:w-[calc(100% - 80px)] lg:ml-[80px] lg:flex-row l">
@@ -65,14 +79,16 @@ const NFTDetails = ({ params }: { params: { id: string } }) => {
       <div className="flex flex-col gap-y-6 lg:w-3/5">
         <p className="text-2xl font-semibold lg:text-3xl">{nftName}</p>
         <div className="flex gap-y-1 flex-col">
-          <h2 className="font-bold text-xl lg:text-2xl">#{findNFTDetails?.maker.user}</h2>
+          <h2 className="font-bold text-xl lg:text-2xl">
+            #{findNFTDetails?.maker.user || retrievedCurrentNFT?.maker.user}
+          </h2>
           <p>
             Owned by{" "}
             <Link
-              href={`/nftDetails/${findNFTDetails?.order_hash}/${findNFTDetails?.maker.address}`}
+              href={`/nftDetails/${ownerDetailsRoute}`}
               className="text-[#6F4FF2]"
             >
-              {findNFTDetails?.maker.user}
+              {findNFTDetails?.maker.user || retrievedCurrentNFT?.maker.user}
             </Link>{" "}
           </p>
         </div>

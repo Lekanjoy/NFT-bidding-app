@@ -32,6 +32,7 @@ const NFTAnalytics = ({
   favoriteCount,
   setFavoriteCount,
 }: NFTAnalyticsProp) => {
+  
   // Get all viewed NFT in database
   async function getAnalytics() {
     let { data, error }: PostgrestResponse<IanalyticsData> = await supabase

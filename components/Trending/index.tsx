@@ -68,8 +68,6 @@ const Trending = () => {
     const currentChain = trendCategories[index].text.toLowerCase()
     setSelectedCat(index);
     dispatch(getAllNFTs({chain: currentChain, nextPageToken: nextPage}));
-
-
   } 
 
 // Remove first element from fetched array which serves as initial/empty state of nftItems

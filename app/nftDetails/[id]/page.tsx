@@ -9,10 +9,20 @@ import { generateCountdown } from "@/utils/func";
 import { FaRegClock } from "react-icons/fa";
 import { IoPricetagOutline } from "react-icons/io5";
 import NFTAnalytics, { IanalyticsData } from "@/components/NFTAnalytics";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const NFTDetails = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
 
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
   const [analyticsData, setAnalyticsData] = useState<IanalyticsData[] | null>(
     null
   );
@@ -65,6 +75,24 @@ const NFTDetails = ({ params }: { params: { id: string } }) => {
       >
         Back
       </Button>
+
+      {/* Alert Dialog */}
+      <AlertDialog open={isAlertModalOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle> Wallet Disconnected</AlertDialogTitle>
+            <AlertDialogDescription>
+              Please connect a wallet first.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setIsAlertModalOpen(false)}>
+              Ok
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <div className="w-full bg-sidebar rounded-xl p-4 flex-grow lg:w-2/5">
         <Image
           src={imgUrl}
@@ -94,6 +122,7 @@ const NFTDetails = ({ params }: { params: { id: string } }) => {
           params={params}
           analyticsData={analyticsData}
           setAnalyticsData={setAnalyticsData}
+          setIsOpen={setIsAlertModalOpen}
         />
         <div className="w-full bg-sidebar flex flex-col rounded-xl border">
           <div className="flex gap-x-2 items-center border-b p-4">

@@ -1,9 +1,5 @@
 "use client";
 import { useState, Dispatch, SetStateAction, useEffect } from "react";
-import { supabase } from "@/supabase";
-import { TiEyeOutline } from "react-icons/ti";
-import { FaRegHeart } from "react-icons/fa";
-import { PostgrestResponse } from "@supabase/supabase-js";
 import FavoriteCounter from "./FavoriteCounter";
 import ViewsCounter from "./ViewsCounter";
 
@@ -19,40 +15,22 @@ type NFTAnalyticsProp = {
   };
   analyticsData: IanalyticsData[] | null;
   setAnalyticsData: Dispatch<SetStateAction<IanalyticsData[] | null>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>
 };
 
 const NFTAnalytics = ({
   params,
   analyticsData,
   setAnalyticsData,
+  setIsOpen
 }: NFTAnalyticsProp) => {
   const [favoriteCount, setFavoriteCount] = useState(0);
-
-  // Get all viewed NFT in database
-  async function getAnalytics() {
-    let { data, error }: PostgrestResponse<IanalyticsData> = await supabase
-      .from("nftitems")
-      .select("*");
-    if (error) {
-      console.error("Error fetching data:", error);
-    } else {
-      setAnalyticsData(data);
-    }
-  }
-
-  // Add currently viewed NFT to database
-  async function insertAnalytics() {
-    const { data, error }: PostgrestResponse<IanalyticsData> = await supabase
-      .from("nftitems")
-      .insert([{ order_hash: params.id, viewcount: 0, likecount: 0 }])
-      .select();
-  }
 
   const [currentLikeCount, setCurrentLikeCount] = useState(0);
 
   //  Handles favorite color functionality
   const [favoriteColor, setFavoriteColor] = useState(
-    localStorage.getItem(`favoriteColor_${params.id}`) || "white"
+    localStorage.getItem(`favoriteColor_${params.id}`) ?? "white"
   );
 
   useEffect(() => {
@@ -83,6 +61,7 @@ const NFTAnalytics = ({
         currentLikeCount={currentLikeCount}
         params={params}
         toggleFavorite={toggleFavorite}
+        setIsOpen={setIsOpen}
       />
     </div>
   );

@@ -13,8 +13,6 @@ import NFTAnalytics, { IanalyticsData } from "@/components/NFTAnalytics";
 const NFTDetails = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
 
-  const [favoriteCount, setFavoriteCount] = useState(0);
-  const [views, setViews] = useState(0);
   const [analyticsData, setAnalyticsData] = useState<IanalyticsData[] | null>(
     null
   );
@@ -96,10 +94,6 @@ const NFTDetails = ({ params }: { params: { id: string } }) => {
           params={params}
           analyticsData={analyticsData}
           setAnalyticsData={setAnalyticsData}
-          views={views}
-          setViews={setViews}
-          favoriteCount={favoriteCount}
-          setFavoriteCount={setFavoriteCount}
         />
         <div className="w-full bg-sidebar flex flex-col rounded-xl border">
           <div className="flex gap-x-2 items-center border-b p-4">
